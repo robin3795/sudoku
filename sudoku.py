@@ -10,7 +10,7 @@ V1: Initial version
 
 def main():
     dataList = []
-    dataList = readFile("board")
+    dataList = readFile("board.txt")
     display(dataList)
     dataList = toTempList(dataList)
     while (doneLoop(dataList) == False):
