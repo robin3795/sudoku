@@ -2,29 +2,20 @@
 #!\Pythin 3.4.3 Aug, 2015
 """Sudoku.py
 Purpose: Python script for play sudoku game
-Developed by Robin Li robinli@live.
-
+Developed by Robin Li robinli@live.ca
 Release Note:
-V0: No module
+V1: Initial version
 """
 
 
 def main():
-
-# initialize dataList
-    dataList=[]
-    dataList = readFile("board.txt")
+    dataList = []
+    dataList = readFile("board")
     display(dataList)
-    tempList = toTempList(dataList)
-    data =loop(tempList)
-    data =loop(data)
-    data =loop(data)
-    data =loop(data)
-    data =loop(data)
-    data =loop(data)
-    data =loop(data)
-    data =loop(data)
-    display(data)
+    dataList = toTempList(dataList)
+    while (doneLoop(dataList) == False):
+        dataList = loop(dataList)
+    display(dataList)
 
 def display(dataList):
     menuIndent = "          "
@@ -34,7 +25,7 @@ def display(dataList):
         print(menuIndent + "| ", end='')
         for j in range(0,9):
             v = dataList[9*i+j]
-            if ( v != 0):
+            if ( v != 0 and len(v) == 1):
                 print(v+" ", end='')
             else:
                 print(". ", end='')
@@ -56,7 +47,7 @@ def readFile(infile):
             line = content[i]
             data1 = line.split(" ")
             for j in range(0,11):
-                if (j !=3 and j!=7):
+                if (j != 3 and j != 7):
                     data.append(data1[j])
     return data
 
@@ -76,37 +67,47 @@ def toTempList(inList):
         else:
             outList.append(str(x))
     return outList
-    
 
-def excludedFunction(groupList,data):
-    if (len(groupList) == 9):
+
+
+def excludedFunction(group,data):
+    if (len(group) == 9):
         doneList = []
-        for item in groupList:
-            if (len(data[item]) ==1 ):
+        for item in group:
+            if (len(data[item]) == 1):
                 doneList.append(data[item])
-        for item in groupList:
+        for item in group:
             if (len(data[item]) !=1 ):
                 for doneItem in doneList:
                     data[item] = data[item].replace(doneItem,"")
     return data
 
 
-def uniqueFunction(groupList,data):
-    if (len(groupList) == 9):
+def uniqueFunction(group,data):
+    if (len(group) == 9):
         notDoneList = nineNumberList()
         notDoneString = ""
-        for item in groupList:
-            if (len(data[item]) ==1 ):
+        for item in group:
+            if (len(data[item]) == 1):
                 notDoneList.remove(str(data[item]))
             else:
                 notDoneString = notDoneString + data[item]
         for numString in notDoneList:
-            if (notDoneString.count(numString) ==1):
-                for item in groupList:
-                    if (data[item].count(numString)==1):
-                        data[item]=numString                
+            if (notDoneString.count(numString) == 1):
+                for item in group:
+                    if (data[item].count(numString) == 1):
+                        data[item] = numString                
     return data
 
+
+def groupDone(group,data):
+    if (len(group) == 9):
+        doneFlag = True
+        for item in group:
+            if (len(data[item]) != 1 ):
+                doneFlag = False                
+    return doneFlag
+    
 
 def excludedLoop(data):
     for i in range(0,9):
@@ -136,6 +137,7 @@ def uniqueLloop(data):
         group = []
         for j in range(0,9):
             group.append(i*9+j)
+            
         data = uniqueFunction(group,data)
 
     for i in range(0,9):
@@ -153,6 +155,38 @@ def uniqueLloop(data):
                     group.append(m+k*9+l)
             data = uniqueFunction(group,data)
     return data
+
+
+def doneLoop(data):
+    doneFlag = True
+    for i in range(0,9):
+        group = []
+        for j in range(0,9):
+            group.append(i*9+j)
+        groupFlag = groupDone(group,data)
+        if (groupFlag == False):
+            doneFlag = False
+        
+    for i in range(0,9):
+        group = []
+        for j in range(0,9):
+            group.append(j*9+i)
+        groupFlag = groupDone(group,data)
+        if (groupFlag == False):
+            doneFlag = False
+            
+    for i in range(0,3):
+        for j in range(0,3):
+            m = i*27+j*3
+            group = []
+            for k in range(0,3):
+                for l in range(0,3):
+                    group.append(m+k*9+l)
+        groupFlag = groupDone(group,data)
+        if (groupFlag == False):
+            doneFlag = False
+    return doneFlag
+
 
 def loop(data):
     data = excludedLoop(data)
