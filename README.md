@@ -1,1 +1,8 @@
 # sukodu
+
+Version:
+
+V0: May 2017
+    Function, no Done check.
+V1: 
+    Initial version, add doneLoop to check if done.
