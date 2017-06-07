@@ -3,38 +3,37 @@
 """Sudoku.py
 Purpose: Python script for play sudoku game
 Developed by Robin Li robinli@live.ca
-Release Note:
-V1: Initial version
 """
 
 
 def main():
     dataList = []
-    dataList = readFile("board.txt")
-    display(dataList)
-    dataList = toTempList(dataList)
+    dataList = readFile("board")
+    messageWelcome = "Welcome to play the Sudoku Games !"
+    messageDone = "Congratulation! This Sudoku is solved !"
+    display(messageWelcome,dataList)
     while (doneLoop(dataList) == False):
         dataList = loop(dataList)
-    display(dataList)
+    display(messageDone,dataList)
 
-def display(dataList):
-    menuIndent = "          "
-    print ("       Welcome to play the Sudoku Games ! \n")
-    print (menuIndent + "+-------+-------+-------+")
+def display(message,dataList):
+    displayIndent = "          "
+    print ("       " + message + " \n")
+    print (displayIndent + "+-------+-------+-------+")
     for i in range(0,9):
-        print(menuIndent + "| ", end='')
+        print(displayIndent + "| ", end='')
         for j in range(0,9):
             v = dataList[9*i+j]
             if ( v != 0 and len(v) == 1):
                 print(v+" ", end='')
             else:
                 print(". ", end='')
-            if (j==2 or j==5):
+            if (j == 2 or j == 5):
                 print("| ", end='')
-        print("| ")
+        print("|")
         if (i==2 or i==5):
-                print (menuIndent + "+-------+-------+-------+")
-    print (menuIndent + "+-------+-------+-------+")
+                print (displayIndent + "+-------+-------+-------+")
+    print (displayIndent + "+-------+-------+-------+\n\n")
 
 
 def readFile(infile):
@@ -45,10 +44,13 @@ def readFile(infile):
     for i in range(0,12):
         if (i % 4 != 0):
             line = content[i]
-            data1 = line.split(" ")
+            tempList = line.split(" ")
             for j in range(0,11):
-                if (j != 3 and j != 7):
-                    data.append(data1[j])
+                if (j !=3 and j!=7):
+                    if (tempList[j] == "."):
+                        data.append("123456789")
+                    else:
+                        data.append(tempList[j])
     return data
 
 
@@ -59,22 +61,11 @@ def nineNumberList():
     return tempList
 
 
-def toTempList(inList):
-    outList = []
-    for x in inList:
-        if (x=="."):
-            outList.append("123456789")
-        else:
-            outList.append(str(x))
-    return outList
-
-
-
 def excludedFunction(group,data):
     if (len(group) == 9):
         doneList = []
         for item in group:
-            if (len(data[item]) == 1):
+            if (len(data[item]) ==1 ):
                 doneList.append(data[item])
         for item in group:
             if (len(data[item]) !=1 ):
@@ -88,15 +79,15 @@ def uniqueFunction(group,data):
         notDoneList = nineNumberList()
         notDoneString = ""
         for item in group:
-            if (len(data[item]) == 1):
+            if (len(data[item]) ==1 ):
                 notDoneList.remove(str(data[item]))
             else:
                 notDoneString = notDoneString + data[item]
         for numString in notDoneList:
-            if (notDoneString.count(numString) == 1):
+            if (notDoneString.count(numString) ==1):
                 for item in group:
-                    if (data[item].count(numString) == 1):
-                        data[item] = numString                
+                    if (data[item].count(numString)==1):
+                        data[item]=numString                
     return data
 
 
