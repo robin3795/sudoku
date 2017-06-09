@@ -11,10 +11,17 @@ def main():
     dataList = readFile("board")
     messageWelcome = "Welcome to play the Sudoku Games !"
     messageDone = "Congratulation! This Sudoku is solved !"
+    messagePlus = "Oh.. Hard game, and we need more smarter algorithms!"
     display(messageWelcome,dataList)
-    while (doneLoop(dataList) == False):
+    i = 1
+    while (doneLoop(dataList) == False and i < 10):
         dataList = loop(dataList)
-    display(messageDone,dataList)
+        i = i +1
+    if (doneLoop(dataList)):
+        display(messageDone,dataList)
+    else:
+        display(messagePlus,dataList)
+        dataList = loopPlus(dataList)
 
 def display(message,dataList):
     displayIndent = "          "
@@ -184,6 +191,8 @@ def loop(data):
     data = uniqueLloop(data)
     return data
 
+def loopPlus(data):
+    return data
 
 if __name__ == "__main__":
     main()
