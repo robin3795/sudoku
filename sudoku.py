@@ -13,10 +13,7 @@ def main():
     messageDone = "Congratulation! This Sudoku is solved !"
     messagePlus = "Oh.. Hard game, and we need more smarter algorithms!"
     display(messageWelcome,dataList)
-    i = 1
-    while (doneLoop(dataList) == False and i < 10):
-        dataList = loop(dataList)
-        i = i +1
+    dataList = loop(dataList)
     if (doneLoop(dataList)):
         display(messageDone,dataList)
     else:
@@ -87,7 +84,7 @@ def uniqueFunction(group,data):
         notDoneString = ""
         for item in group:
             if (len(data[item]) ==1 ):
-                notDoneList.remove(str(data[item]))
+                notDoneList.remove(data[item])
             else:
                 notDoneString = notDoneString + data[item]
         for numString in notDoneList:
@@ -105,7 +102,7 @@ def groupDone(group,data):
             if (len(data[item]) != 1 ):
                 doneFlag = False                
     return doneFlag
-    
+
 
 def excludedLoop(data):
     for i in range(0,9):
@@ -130,12 +127,11 @@ def excludedLoop(data):
             data = excludedFunction(group,data)
     return data
 
-def uniqueLloop(data):
+def uniqueLoop(data):
     for i in range(0,9):
         group = []
         for j in range(0,9):
-            group.append(i*9+j)
-            
+            group.append(i*9+j)            
         data = uniqueFunction(group,data)
 
     for i in range(0,9):
@@ -187,12 +183,61 @@ def doneLoop(data):
 
 
 def loop(data):
-    data = excludedLoop(data)
-    data = uniqueLloop(data)
+    i = 1
+    while (doneLoop(data) == False and i < 10):
+        data = excludedLoop(data)
+        data = uniqueLoop(data)
+        i = i +1
     return data
 
 def loopPlus(data):
+    print (data)
     return data
+
+
+def groupOK(group,data):
+    if (len(group) == 9):
+        okFlag = True
+        tempList = nineNumberList()
+        for item in group:
+            if (len(data[item]) != 1 ):
+                okFlag = False
+            else:
+                tempList.remove(data[item])
+        if (tempList != null):
+            okFlag = False
+    return okFlag
+
+def okLoop(data):
+    okFlag = True
+    for i in range(0,9):
+        group = []
+        for j in range(0,9):
+            group.append(i*9+j)
+        groupFlag = groupOK(group,data)
+        if (groupFlag == False):
+            okFlag = False
+        
+    for i in range(0,9):
+        group = []
+        for j in range(0,9):
+            group.append(j*9+i)
+        groupFlag = groupOK(group,data)
+        if (groupFlag == False):
+            okFlag = False
+            
+    for i in range(0,3):
+        for j in range(0,3):
+            m = i*27+j*3
+            group = []
+            for k in range(0,3):
+                for l in range(0,3):
+                    group.append(m+k*9+l)
+        groupFlag = groupOK(group,data)
+        if (groupFlag == False):
+            okFlag = False
+    return okFlag
+
 
 if __name__ == "__main__":
     main()
