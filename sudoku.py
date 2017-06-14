@@ -7,11 +7,13 @@ Developed by Robin Li robinli@live.ca
 
 
 def main():
+    global groups
     dataList = []
     dataList = readFile("board")
     messageWelcome = "Welcome to play the Sudoku Games !"
     messageDone = "Congratulation! This Sudoku is solved !"
     messagePlus = "Oh.. Hard game, and we need more smarter algorithms!"
+    groups = groupGenerator()
     display(messageWelcome,dataList)
     dataList = loop(dataList)
     if (doneLoop(dataList)):
@@ -19,6 +21,8 @@ def main():
     else:
         display(messagePlus,dataList)
         dataList = loopPlus(dataList)
+        if (okLoop(groups,dataList)):
+            display(messageDone,dataList)
 
 def display(message,dataList):
     displayIndent = "          "
@@ -105,13 +109,11 @@ def groupDone(group,data):
 
 
 def excludedLoop(data):
-    groups = groupGenerator()
     for i in range(0,27):
         data = excludedFunction(groups[i],data)
     return data
 
 def uniqueLoop(data):
-    groups = groupGenerator()
     for i in range(0,27):            
         data = uniqueFunction(groups[i],data)
     return data
@@ -140,7 +142,6 @@ def groupGenerator():
 
 def doneLoop(data):
     doneFlag = True
-    groups = groupGenerator()
     for i in range(0,27):
         groupFlag = groupDone(groups[i],data)
         if (groupFlag == False):
@@ -169,15 +170,14 @@ def groupOK(group,data):
                 okFlag = False
             else:
                 tempList.remove(data[item])
-        if (tempList != null):
+        if (len(tempList) != 0 ):
             okFlag = False
     return okFlag
 
-def okLoop(data):
+def okLoop(groups,data):
     okFlag = True
-    groups = groupGenerator()
     for i in range(0,27):
-        groupFlag = groupOK(group[i],data)
+        groupFlag = groupOK(groups[i],data)
         if (groupFlag == False):
             okFlag = False
     return okFlag
