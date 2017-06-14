@@ -21,7 +21,7 @@ def main():
     else:
         display(messagePlus,dataList)
         dataList = loopPlus(dataList)
-        if (okLoop(groups,dataList)):
+        if (okLoop(dataList)):
             display(messageDone,dataList)
 
 def display(message,dataList):
@@ -174,7 +174,7 @@ def groupOK(group,data):
             okFlag = False
     return okFlag
 
-def okLoop(groups,data):
+def okLoop(data):
     okFlag = True
     for i in range(0,27):
         groupFlag = groupOK(groups[i],data)
