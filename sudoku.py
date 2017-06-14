@@ -105,70 +105,29 @@ def groupDone(group,data):
 
 
 def excludedLoop(data):
-    for i in range(0,9):
-        group = []
-        for j in range(0,9):
-            group.append(i*9+j)
-        data = excludedFunction(group,data)
-
-    for i in range(0,9):
-        group = []
-        for j in range(0,9):
-            group.append(j*9+i)
-        data = excludedFunction(group,data)
-
-    for i in range(0,3):
-        for j in range(0,3):
-            m = i*27+j*3
-            group = []
-            for k in range(0,3):
-                for l in range(0,3):
-                    group.append(m+k*9+l)
-            data = excludedFunction(group,data)
+    groups = groupGenerator()
+    for i in range(0,27):
+        data = excludedFunction(groups[i],data)
     return data
 
 def uniqueLoop(data):
-    for i in range(0,9):
-        group = []
-        for j in range(0,9):
-            group.append(i*9+j)            
-        data = uniqueFunction(group,data)
-
-    for i in range(0,9):
-        group = []
-        for j in range(0,9):
-            group.append(j*9+i)
-        data = uniqueFunction(group,data)
-
-    for i in range(0,3):
-        for j in range(0,3):
-            m = i*27+j*3
-            group = []
-            for k in range(0,3):
-                for l in range(0,3):
-                    group.append(m+k*9+l)
-            data = uniqueFunction(group,data)
+    groups = groupGenerator()
+    for i in range(0,27):            
+        data = uniqueFunction(groups[i],data)
     return data
 
-
-def doneLoop(data):
-    doneFlag = True
+def groupGenerator():
+    totalGroups = []
     for i in range(0,9):
         group = []
         for j in range(0,9):
             group.append(i*9+j)
-        groupFlag = groupDone(group,data)
-        if (groupFlag == False):
-            doneFlag = False
-        
+        totalGroups.append(group)
     for i in range(0,9):
         group = []
         for j in range(0,9):
             group.append(j*9+i)
-        groupFlag = groupDone(group,data)
-        if (groupFlag == False):
-            doneFlag = False
-            
+        totalGroups.append(group)
     for i in range(0,3):
         for j in range(0,3):
             m = i*27+j*3
@@ -176,7 +135,14 @@ def doneLoop(data):
             for k in range(0,3):
                 for l in range(0,3):
                     group.append(m+k*9+l)
-        groupFlag = groupDone(group,data)
+            totalGroups.append(group)
+    return totalGroups
+
+def doneLoop(data):
+    doneFlag = True
+    groups = groupGenerator()
+    for i in range(0,27):
+        groupFlag = groupDone(groups[i],data)
         if (groupFlag == False):
             doneFlag = False
     return doneFlag
@@ -187,11 +153,10 @@ def loop(data):
     while (doneLoop(data) == False and i < 10):
         data = excludedLoop(data)
         data = uniqueLoop(data)
-        i = i +1
+        i = i + 1
     return data
 
 def loopPlus(data):
-    print (data)
     return data
 
 
@@ -210,30 +175,9 @@ def groupOK(group,data):
 
 def okLoop(data):
     okFlag = True
-    for i in range(0,9):
-        group = []
-        for j in range(0,9):
-            group.append(i*9+j)
-        groupFlag = groupOK(group,data)
-        if (groupFlag == False):
-            okFlag = False
-        
-    for i in range(0,9):
-        group = []
-        for j in range(0,9):
-            group.append(j*9+i)
-        groupFlag = groupOK(group,data)
-        if (groupFlag == False):
-            okFlag = False
-            
-    for i in range(0,3):
-        for j in range(0,3):
-            m = i*27+j*3
-            group = []
-            for k in range(0,3):
-                for l in range(0,3):
-                    group.append(m+k*9+l)
-        groupFlag = groupOK(group,data)
+    groups = groupGenerator()
+    for i in range(0,27):
+        groupFlag = groupOK(group[i],data)
         if (groupFlag == False):
             okFlag = False
     return okFlag
