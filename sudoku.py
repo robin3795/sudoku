@@ -1,6 +1,6 @@
 #!\Python33 python
-#!\Pythin 3.4.3 Aug, 2015
-"""Sudoku.py
+#!\Python 3.6.0
+"""Sudoku.py Ver 1.4.0
 Purpose: Python script for play sudoku game
 Developed by Robin Li robinli@live.ca
 """
