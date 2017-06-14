@@ -1,10 +1,8 @@
 #!\Python33 python
 #!\Python 3.6.0
-"""Sudoku.py Ver 2.0.0
-Purpose: Python script for play sudoku game
+"""Sudoku.py Ver 2.0.1
 Developed by Robin Li robinli@live.ca
 """
-
 
 def main():
     global groups
@@ -170,16 +168,14 @@ def loopPlus(data):
                 tempData[item] = data[item][0]
                 tempData=loop(tempData)
                 if okLoop(tempData):
-                    data=tempData
+                    data = tempData
                     stopLoop = True
                     break
                 else:
-                    print (data[item])
-                    print (data[item][1])
                     tempData[item] = data[item][1]
                     tempData=loop(tempData)
                     if okLoop(tempData):
-                        data=tempData
+                        data = tempData
                         stopLoop = True
                         break
         if (stopLoop):
