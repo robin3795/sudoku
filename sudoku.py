@@ -1,6 +1,6 @@
 #!\Python33 python
 #!\Python 3.6.0
-"""Sudoku.py Ver 1.4.0
+"""Sudoku.py Ver 2.0.0
 Purpose: Python script for play sudoku game
 Developed by Robin Li robinli@live.ca
 """
@@ -23,6 +23,7 @@ def main():
         dataList = loopPlus(dataList)
         if (okLoop(dataList)):
             display(messageDone,dataList)
+
 
 def display(message,dataList):
     displayIndent = "          "
@@ -69,6 +70,28 @@ def nineNumberList():
     return tempList
 
 
+def groupGenerator():
+    totalGroups = []
+    for i in range(0,9):
+        group = []
+        for j in range(0,9):
+            group.append(i*9+j)
+        totalGroups.append(group)
+    for i in range(0,9):
+        group = []
+        for j in range(0,9):
+            group.append(j*9+i)
+        totalGroups.append(group)
+    for i in range(0,3):
+        for j in range(0,3):
+            m = i*27+j*3
+            group = []
+            for k in range(0,3):
+                for l in range(0,3):
+                    group.append(m+k*9+l)
+            totalGroups.append(group)
+    return totalGroups
+
 def excludedFunction(group,data):
     if (len(group) == 9):
         doneList = []
@@ -87,12 +110,13 @@ def uniqueFunction(group,data):
         notDoneList = nineNumberList()
         notDoneString = ""
         for item in group:
-            if (len(data[item]) ==1 ):
-                notDoneList.remove(data[item])
+            if (len(data[item]) == 1):
+                if (data[item] in notDoneList):
+                    notDoneList.remove(data[item])
             else:
                 notDoneString = notDoneString + data[item]
         for numString in notDoneList:
-            if (notDoneString.count(numString) ==1):
+            if (notDoneString.count(numString) == 1):
                 for item in group:
                     if (data[item].count(numString)==1):
                         data[item]=numString                
@@ -118,27 +142,6 @@ def uniqueLoop(data):
         data = uniqueFunction(groups[i],data)
     return data
 
-def groupGenerator():
-    totalGroups = []
-    for i in range(0,9):
-        group = []
-        for j in range(0,9):
-            group.append(i*9+j)
-        totalGroups.append(group)
-    for i in range(0,9):
-        group = []
-        for j in range(0,9):
-            group.append(j*9+i)
-        totalGroups.append(group)
-    for i in range(0,3):
-        for j in range(0,3):
-            m = i*27+j*3
-            group = []
-            for k in range(0,3):
-                for l in range(0,3):
-                    group.append(m+k*9+l)
-            totalGroups.append(group)
-    return totalGroups
 
 def doneLoop(data):
     doneFlag = True
@@ -158,8 +161,37 @@ def loop(data):
     return data
 
 def loopPlus(data):
+    stopLoop = False
+    for i in range(0,27):
+        group = groups[i]
+        for item in group:
+            if (len(data[item]) == 2):
+                tempData = copyList(data)
+                tempData[item] = data[item][0]
+                tempData=loop(tempData)
+                if okLoop(tempData):
+                    data=tempData
+                    stopLoop = True
+                    break
+                else:
+                    print (data[item])
+                    print (data[item][1])
+                    tempData[item] = data[item][1]
+                    tempData=loop(tempData)
+                    if okLoop(tempData):
+                        data=tempData
+                        stopLoop = True
+                        break
+        if (stopLoop):
+            break
     return data
 
+def copyList(inList):
+    outList = []
+    for item in inList:
+        outList.append(item)
+    return outList
+    
 
 def groupOK(group,data):
     if (len(group) == 9):
@@ -169,7 +201,8 @@ def groupOK(group,data):
             if (len(data[item]) != 1 ):
                 okFlag = False
             else:
-                tempList.remove(data[item])
+                if (data[item] in tempList):
+                    tempList.remove(data[item])
         if (len(tempList) != 0 ):
             okFlag = False
     return okFlag
