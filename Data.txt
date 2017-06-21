@@ -25,6 +25,8 @@ Libraries: Selenium, database
 home-made library/function
    sql count(*)  [(12, )] HIVE
    ","  Excel 
+   https://github.com/robotframework/QuickStartGuide/blob/master/QuickStart.rst
+  https://github.com/robotframework/RIDE/wiki/How-To#starting-ride
 4.Python
 Languages 2 /3
 Github  robin3795
