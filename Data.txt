@@ -8,9 +8,9 @@ Hadoop  ---- platform
 Storage: HDFS    Computing: MapReduce
 hdfs dfs [COMMAND [COMMAND_OPTIONS]]
 DM Framework: HDFS, YARN
-Operations Frameworks: Ambari,Zookeeper,Cloudbreak,OOzie,…
-Data Access Frameworks: Pig, Hive,Storm,HBase,Spark,…
-Governance & Integration: Falcon, WebHDFS, sqoop,Kafka…
+Operations Frameworks: Ambari,Zookeeper,Cloudbreak,OOzie,â€¦
+Data Access Frameworks: Pig, Hive,Storm,HBase,Spark,â€¦
+Governance & Integration: Falcon, WebHDFS, sqoop,Kafkaâ€¦
 2. ETL
 Data Flow
 Ingestion Parser/Mapper Stream
@@ -23,10 +23,10 @@ GUI:RIDE
 CLI:pybot Dir/Suite.txt "Test Case Name"
 Libraries: Selenium, database
 home-made library/function
-   sql count(*)  [(12, )]
- HIVE
+   sql count(*)  [(12, )] HIVE
+   ","  Excel 
 4.Python
-Languages
+Languages 2 /3
 Github  robin3795
 Converntion: Constant --UPPER
 camel case 
