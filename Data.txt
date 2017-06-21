@@ -1,0 +1,40 @@
+1. Data 
+Quality
+Quantity: KB(kilo), MB(Mega), GB(Giga),TB(Tera),PB(Peta),EB(Exa),ZB(Zetta),YB(Yotta)
+Data Base - Data Warehouse -Data Mart -Data Lake
+MPP Massive Parallel Processing
+Big data: Volume, Variety, and Velocity
+Hadoop  ---- platform
+Storage: HDFS    Computing: MapReduce
+hdfs dfs [COMMAND [COMMAND_OPTIONS]]
+DM Framework: HDFS, YARN
+Operations Frameworks: Ambari,Zookeeper,Cloudbreak,OOzie,…
+Data Access Frameworks: Pig, Hive,Storm,HBase,Spark,…
+Governance & Integration: Falcon, WebHDFS, sqoop,Kafka…
+2. ETL
+Data Flow
+Ingestion Parser/Mapper Stream
+Parquet file  -- colun-oriented
+csv,psv; excel; ""
+(Apache HIVE, Cloudera Impala, Pig)
+Data quality: Completeness, Integrity, 
+3. Robot framework
+GUI:RIDE
+CLI:pybot Dir/Suite.txt "Test Case Name"
+Libraries: Selenium, database
+home-made library/function
+   sql count(*)  [(12, )]
+ HIVE
+4.Python
+Languages
+Github  robin3795
+Converntion: Constant --UPPER
+camel case 
+__function__,_function_, self.
+
+official vs irregular
+print-out vs handwritting
+
+
+
+
