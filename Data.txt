@@ -37,6 +37,7 @@ __function__,_function_, self.
 official vs irregular
 print-out vs handwritting
 
+outputfilename=inputfile[::-1].replace('.','.kcehc_',1)[::-1]    
 
 
 
